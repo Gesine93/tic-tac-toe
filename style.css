@@ -17,11 +17,11 @@ table {
 
 td {
     border: 0.3rem solid black;
-    width: 10rem;
-    height: 10rem;
+    width: min(20vw, 10rem);
+    height: min(20vw, 10rem);
     vertical-align: center;
     text-align: center;
-    font-size: 8.5rem;
+    font-size: min(15vw, 8rem);
 }
 
 .inactive {
@@ -31,10 +31,10 @@ td {
 
 button {
     font-family: Arial, Helvetica, sans-serif;
-    font-size: 3rem;
+    font-size: min(6vw, 3rem);
 }
 
 p {
-    font-size: 3rem;
+    font-size: min(6vw, 3rem);
     margin: 0;
 }
