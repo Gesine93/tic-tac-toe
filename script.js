@@ -6,20 +6,19 @@ const gameboard = (function (){
 function createPlayer(sign) {
     let won = false;
     let round = 0;
-    const getWon = () => won;
-    const giveWin = () => won = true;
     const getRound = () => round;
     const giveRound = () => ++round;
 
-    return { sign, getWon, giveWin, getRound, giveRound };
+    return { sign, getRound, giveRound };
 }
 
 function displayRound() {
     let round = 1;
     const getRound = () => round;
     const giveRound = () => ++round;
+    const reset = () => round = 1;
 
-    return { getRound, giveRound };
+    return { getRound, giveRound, reset };
 }
 
 function getPlayer(player_x, player_o) {
@@ -43,40 +42,72 @@ function checkWinner(board, currentPlayer) {
         || (board[2] !== "" && board[2] === board[5] && board[5] === board[8])
         || (board[0] !== "" && board[0] === board[4] && board[4] === board[8])
         || (board[2] !== "" && board[2] === board[4] && board[4] === board[6])) {
-        currentPlayer.giveWin();
         return true;
     } else {
         return false;
     }
 }
 
-function playGame() {
+function playGame(play) {
     const player_x = createPlayer("x");
     const player_o = createPlayer("o");
     const board = gameboard.board;
     const round = displayRound();
     let player = getPlayer(player_x, player_o);
     let fields = document.querySelectorAll("td");
-    fields.forEach(function(field) {
-        field.addEventListener("click", () => {
-            if (board[field.dataset.id] === "") {
-                board[field.dataset.id] = player.sign;
-                document.querySelector(`[data-id="${field.dataset.id}"]`).textContent = player.sign;
-                player.giveRound();
-                round.giveRound();
-                if (checkWinner(board, player)) {
-                    console.log(`Player ${player.sign} wins!`);
-                } else if (round.getRound() > 9) {
-                    console.log("It's a draw!");
-                }
-                player = getPlayer(player_x, player_o);
+    let result = document.querySelector(".result");
+    play.textContent = "Restart Game";
+
+    function placeSign(event) {
+        const field = event.target;
+        if (board[field.dataset.id] === "") {
+            board[field.dataset.id] = player.sign;
+            document.querySelector(`[data-id="${field.dataset.id}"]`).textContent = player.sign;
+            player.giveRound();
+            round.giveRound();
+            if (checkWinner(board, player)) {
+                result.textContent = `Player ${player.sign} wins!`;
+                endGame();
+            } else if (round.getRound() > 9) {
+                result.textContent = "It's a draw!";
+                endGame();
             }
-        });
+            player = getPlayer(player_x, player_o);
+        }
+    }
+
+    function endGame() {
+        fields.forEach(field => field.removeEventListener('click', placeSign));
+        play.classList.toggle("inactive");
+        play.addEventListener("click", restartGame, { once: true });
+    }
+
+    function restartGame() {
+        fields.forEach(field => field.textContent = "");
+        result.textContent = "";
+        for (let i = 0; i < board.length; i++) {
+            board[i] = "";
+        }
+        round.reset();
+        playGame(play);
+    }
+
+    fields.forEach(field => {
+        field.addEventListener("click", placeSign);
     });
 }
 
+
 document.addEventListener("DOMContentLoaded", () => {
-    playGame();
+    let play = document.createElement("button");
+    let body = document.querySelector("body");
+    play.classList.add("play");
+    play.textContent = "Start Game";
+    body.insertBefore(play, body.firstChild);
+    play.addEventListener("click", () => {
+        play.classList.toggle("inactive");
+        playGame(play);
+    })
 });
 
 

@@ -4,6 +4,9 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    row-gap: 3rem;
+    font-family: Arial, Helvetica, sans-serif;
+    padding-top: 2rem;
 }
 
 table {
@@ -13,9 +16,25 @@ table {
 }
 
 td {
-    border: 1px solid black;
-    width: 2rem;
-    height: 2rem;
+    border: 0.3rem solid black;
+    width: 10rem;
+    height: 10rem;
     vertical-align: center;
     text-align: center;
+    font-size: 8.5rem;
+}
+
+.inactive {
+    opacity: 0; 
+    pointer-events: none;
+}
+
+button {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 3rem;
+}
+
+p {
+    font-size: 3rem;
+    margin: 0;
 }
