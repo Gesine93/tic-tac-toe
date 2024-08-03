@@ -19,13 +19,7 @@ function displayRound() {
     const getRound = () => round;
     const giveRound = () => ++round;
 
-    return { getRound, giveRound }
-}
-
-function placeSign(player, field, board, round) {
-    board[field] = player.sign;
-    player.giveRound();
-    round.giveRound();
+    return { getRound, giveRound };
 }
 
 function getPlayer(player_x, player_o) {
@@ -56,47 +50,39 @@ function checkWinner(board, currentPlayer) {
     }
 }
 
-function getField(board) {
-    let field;
-    while (true) {
-        field = parseInt(prompt("In which field do you want to place your sign?"));
-        if (board[field] === "") {
-            return field;
-        } else {
-            alert("Field already taken, please choose another field.");
-        }
-    }
-}
-
 function playGame() {
     const player_x = createPlayer("x");
     const player_o = createPlayer("o");
     const board = gameboard.board;
     const round = displayRound();
-    let player;
-    let field;
-
-    while (round.getRound() <= 9) {
-        player = getPlayer(player_x, player_o);
-        field = getField(board);
-        placeSign(player, field, board, round);
-
-        if (checkWinner(board, player)) {
-            alert(`Player ${player.sign} wins!`);
-            break;
-        }
-
-        if (round.getRound() > 9) {
-            alert("It's a draw!");
-            break;
-        }
-    }
+    let player = getPlayer(player_x, player_o);
+    let fields = document.querySelectorAll("td");
+    fields.forEach(function(field) {
+        field.addEventListener("click", () => {
+            if (board[field.dataset.id] === "") {
+                board[field.dataset.id] = player.sign;
+                document.querySelector(`[data-id="${field.dataset.id}"]`).textContent = player.sign;
+                player.giveRound();
+                round.giveRound();
+                if (checkWinner(board, player)) {
+                    console.log(`Player ${player.sign} wins!`);
+                } else if (round.getRound() > 9) {
+                    console.log("It's a draw!");
+                }
+                player = getPlayer(player_x, player_o);
+            }
+        });
+    });
 }
 
-playGame();
+document.addEventListener("DOMContentLoaded", () => {
+    playGame();
+});
 
 
 
+// alles in event listener
+// board mit tabellenzellen verbinden
 // checken ob jemand gewonnen hat
 // field aus prompt bestimmen
 // placeSign aufrufen solange niemand gewonnen hat
