@@ -2,7 +2,7 @@
     --color1: rgb(30, 30, 30);
     --color2: rgb(244, 244, 244);
     --color3: hsl(13, 94%, 52%);
-    --color4: hsl(13, 94%, 42%);
+    --color4: hsl(13, 94%, 32%);
 }
 
 body {
@@ -30,7 +30,9 @@ td {
     height: min(20vw, 10rem);
     vertical-align: center;
     text-align: center;
+    font-family: Verdana, Georgia, "Trebuchet MS", sans-serif;
     font-size: min(15vw, 8rem);
+    color: var(--color3);
 }
 
 
@@ -54,6 +56,8 @@ button {
 input {
     height: min(6vw, 3rem);
     font-size: min(4vw, 2rem);
+    margin: 0 0.2rem;
+    max-width: 40vw;
 }
 
 button:hover {
@@ -64,7 +68,6 @@ p {
     font-size: min(6vw, 3rem);
     color: var(--color3);
     margin: 0;
-    transition: opacity 1s ease;
     font-weight: 500;
 }
 
