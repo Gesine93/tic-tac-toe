@@ -1,3 +1,10 @@
+:root {
+    --color1: rgb(30, 30, 30);
+    --color2: rgb(244, 244, 244);
+    --color3: hsl(13, 94%, 52%);
+    --color4: hsl(13, 94%, 42%);
+}
+
 body {
     padding: 0;
     margin: 0;
@@ -7,6 +14,8 @@ body {
     row-gap: 3rem;
     font-family: Arial, Helvetica, sans-serif;
     padding-top: 2rem;
+    background-color: var(--color1);
+    color: var(--color2);
 }
 
 table {
@@ -16,13 +25,14 @@ table {
 }
 
 td {
-    border: 0.3rem solid black;
+    border: 0.3rem solid var(--color2);
     width: min(20vw, 10rem);
     height: min(20vw, 10rem);
     vertical-align: center;
     text-align: center;
     font-size: min(15vw, 8rem);
 }
+
 
 .inactive {
     opacity: 0; 
@@ -31,10 +41,37 @@ td {
 
 button {
     font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    padding: 0.75rem 1.5rem;
     font-size: min(6vw, 3rem);
+    background-color: var(--color3);
+    border: none;
+    border-radius: 1rem;
+    color: var(--color2);
+    transition: background-color 1s ease;
+}
+
+input {
+    height: min(6vw, 3rem);
+    font-size: min(4vw, 2rem);
+}
+
+button:hover {
+    background-color: var(--color4);
 }
 
 p {
     font-size: min(6vw, 3rem);
+    color: var(--color3);
     margin: 0;
+    transition: opacity 1s ease;
+    font-weight: 500;
+}
+
+.form {
+    transition: opacity 1s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 1rem;
 }

@@ -3,13 +3,12 @@ const gameboard = (function (){
     return { board };
 })();
 
-function createPlayer(sign) {
-    let won = false;
+function createPlayer(sign, name) {
     let round = 0;
     const getRound = () => round;
     const giveRound = () => ++round;
 
-    return { sign, getRound, giveRound };
+    return { sign, name, getRound, giveRound };
 }
 
 function displayRound() {
@@ -49,14 +48,14 @@ function checkWinner(board, currentPlayer) {
 }
 
 function playGame(play) {
-    const player_x = createPlayer("x");
-    const player_o = createPlayer("o");
+    let form = document.querySelector(".form");
+    const player_x = createPlayer("x", "Player One");
+    const player_o = createPlayer("o", "Player Two");
     const board = gameboard.board;
     const round = displayRound();
     let player = getPlayer(player_x, player_o);
     let fields = document.querySelectorAll("td");
-    let result = document.querySelector(".result");
-    play.textContent = "Restart Game";
+    let result = document.querySelector("p");
 
     function placeSign(event) {
         const field = event.target;
@@ -66,7 +65,7 @@ function playGame(play) {
             player.giveRound();
             round.giveRound();
             if (checkWinner(board, player)) {
-                result.textContent = `Player ${player.sign} wins!`;
+                result.textContent = `${player.name} wins!`;
                 endGame();
             } else if (round.getRound() > 9) {
                 result.textContent = "It's a draw!";
@@ -78,13 +77,14 @@ function playGame(play) {
 
     function endGame() {
         fields.forEach(field => field.removeEventListener('click', placeSign));
-        play.classList.toggle("inactive");
+        play.textContent = "Restart Game";
+        form.classList.toggle("inactive");
+        result.classList.toggle("inactive");
         play.addEventListener("click", restartGame, { once: true });
     }
 
     function restartGame() {
         fields.forEach(field => field.textContent = "");
-        result.textContent = "";
         for (let i = 0; i < board.length; i++) {
             board[i] = "";
         }
@@ -99,13 +99,13 @@ function playGame(play) {
 
 
 document.addEventListener("DOMContentLoaded", () => {
-    let play = document.createElement("button");
-    let body = document.querySelector("body");
-    play.classList.add("play");
+    let play = document.querySelector("button");
+    let form = document.querySelector(".form");
+    let result = document.querySelector("p");
     play.textContent = "Start Game";
-    body.insertBefore(play, body.firstChild);
     play.addEventListener("click", () => {
-        play.classList.toggle("inactive");
+        form.classList.toggle("inactive");
+        result.classList.toggle("inactive");
         playGame(play);
     })
 });
