@@ -43,7 +43,7 @@ td {
 
 button {
     font-family: Verdana, Georgia, "Trebuchet MS", sans-serif;
-    font-weight: bold;
+    font-weight: 500;
     padding: 0.5rem 1rem;
     font-size: min(6vw, 3rem);
     background-color: var(--color3);
