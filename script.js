@@ -78,7 +78,7 @@ function playGame(play, player_x, player_o) {
 
     function endGame() {
         fields.forEach(field => field.removeEventListener('click', placeSign));
-        play.textContent = "Restart Game";
+        play.textContent = "RESTART GAME";
         form.classList.toggle("inactive");
         play.addEventListener("click", restartGame, { once: true });
     }
@@ -118,7 +118,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let form = document.querySelector(".form");
     let player_x;
     let player_o;
-    play.textContent = "Start Game";
+    play.textContent = " START GAME";
     play.addEventListener("click", (e) => {
         e.preventDefault();
         form.classList.toggle("inactive");
